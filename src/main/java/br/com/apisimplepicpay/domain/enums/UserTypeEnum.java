@@ -1,4 +1,4 @@
-package br.com.apisimplepicpay.infra.adapters.enums;
+package br.com.apisimplepicpay.domain.enums;
 
 import jakarta.persistence.AttributeConverter;
 import jakarta.persistence.Converter;
