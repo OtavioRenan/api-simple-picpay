@@ -1,62 +1,52 @@
-package br.com.apisimplepicpay.infra.adapters.entities;
+package br.com.apisimplepicpay.domain;
 
-import br.com.apisimplepicpay.domain.User;
+import br.com.apisimplepicpay.domain.dtos.UserDTO;
 import br.com.apisimplepicpay.domain.enums.UserTypeEnum;
-import jakarta.persistence.*;
-import jakarta.validation.constraints.NotBlank;
-import jakarta.validation.constraints.NotNull;
+import br.com.apisimplepicpay.infra.adapters.entities.UserEntity;
 
 import java.math.BigDecimal;
 
-@Entity(name = "users")
-@Table(name = "users")
-public class UserEntity {
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+public class User {
     private Long id;
 
-    @NotBlank
-    @Column(name = "first_name")
     private String firstName;
 
-    @NotBlank
-    @Column(name = "last_name")
     private String lastName;
 
-    @NotBlank
-    @Column(unique = true)
     private String document;
 
-    @NotBlank
     private String email;
 
-    @NotBlank
     private String password;
 
-    @NotNull
     private BigDecimal balance;
 
-    @NotNull
-    @Column(name = "user_types")
-    @Enumerated(EnumType.STRING)
     private UserTypeEnum userType;
 
-    public UserEntity() {
+    public User(UserEntity entity) {
+        id = entity.getId();
+        firstName = entity.getFirstName();
+        lastName = entity.getLastName();
+        document = entity.getDocument();
+        email = entity.getEmail();
+        password = entity.getPassword();
+        balance = entity.getBalance();
+        userType = entity.getUserType();
     }
 
-    public UserEntity(User user) {
-        id = user.getId();
-        firstName = user.getFirstName();
-        lastName = user.getLastName();
-        document = user.getDocument();
-        email = user.getEmail();
-        password = user.getPassword();
-        balance = user.getBalance();
-        userType = user.getUserType();
+    public User(UserDTO dto) {
+        id = dto.getId();
+        firstName = dto.getFirstName();
+        lastName = dto.getLastName();
+        document = dto.getDocument();
+        email = dto.getEmail();
+        password = dto.getPassword();
+        balance = dto.getBalance();
+        userType = dto.getUserType();
     }
 
-    public User toUser() {
-        return new User(this);
+    public UserDTO toUserDTO() {
+        return new UserDTO(this);
     }
 
     public Long getId() {

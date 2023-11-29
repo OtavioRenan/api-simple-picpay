@@ -1,50 +1,31 @@
-package br.com.apisimplepicpay.infra.adapters.entities;
+package br.com.apisimplepicpay.domain.dtos;
 
 import br.com.apisimplepicpay.domain.User;
 import br.com.apisimplepicpay.domain.enums.UserTypeEnum;
-import jakarta.persistence.*;
-import jakarta.validation.constraints.NotBlank;
-import jakarta.validation.constraints.NotNull;
 
 import java.math.BigDecimal;
 
-@Entity(name = "users")
-@Table(name = "users")
-public class UserEntity {
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+public class UserDTO {
     private Long id;
 
-    @NotBlank
-    @Column(name = "first_name")
     private String firstName;
 
-    @NotBlank
-    @Column(name = "last_name")
     private String lastName;
 
-    @NotBlank
-    @Column(unique = true)
     private String document;
 
-    @NotBlank
     private String email;
 
-    @NotBlank
     private String password;
 
-    @NotNull
     private BigDecimal balance;
 
-    @NotNull
-    @Column(name = "user_types")
-    @Enumerated(EnumType.STRING)
     private UserTypeEnum userType;
 
-    public UserEntity() {
+    public UserDTO() {
     }
 
-    public UserEntity(User user) {
+    public UserDTO(User user) {
         id = user.getId();
         firstName = user.getFirstName();
         lastName = user.getLastName();
@@ -53,10 +34,6 @@ public class UserEntity {
         password = user.getPassword();
         balance = user.getBalance();
         userType = user.getUserType();
-    }
-
-    public User toUser() {
-        return new User(this);
     }
 
     public Long getId() {
