@@ -8,5 +8,5 @@ public interface UserRepositoryPort {
 
     User findUserByDocument(String document) throws UserNotFoundException;
 
-    void saveUser(User user);
+    User saveUser(User user);
 }

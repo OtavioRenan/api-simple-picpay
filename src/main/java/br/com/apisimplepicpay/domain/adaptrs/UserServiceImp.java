@@ -2,6 +2,7 @@ package br.com.apisimplepicpay.domain.adaptrs;
 
 import br.com.apisimplepicpay.domain.User;
 import br.com.apisimplepicpay.domain.dtos.UserDTO;
+import br.com.apisimplepicpay.domain.dtos.recors.UserRecord;
 import br.com.apisimplepicpay.domain.enums.UserTypeEnum;
 import br.com.apisimplepicpay.domain.exceptions.OperationUnauthorizedException;
 import br.com.apisimplepicpay.domain.exceptions.UserNotFoundException;
@@ -18,13 +19,13 @@ public class UserServiceImp implements UserServicePort {
     }
 
     @Override
-    public User findUserById(Long userId) throws UserNotFoundException {
-        return repository.findUserById(userId);
+    public UserDTO findUserById(Long userId) throws UserNotFoundException {
+        return repository.findUserById(userId).toUserDTO();
     }
 
     @Override
-    public void saveUser(UserDTO dto) {
-        repository.saveUser(new User(dto));
+    public UserDTO saveUser(UserRecord record) {
+          return  repository.saveUser(new User(record)).toUserDTO();
     }
 
     @Override

@@ -2,7 +2,8 @@ package br.com.apisimplepicpay.domain.adaptrs;
 
 import br.com.apisimplepicpay.domain.Transaction;
 import br.com.apisimplepicpay.domain.User;
-import br.com.apisimplepicpay.domain.dtos.TransactionDTO;
+import br.com.apisimplepicpay.domain.dtos.UserDTO;
+import br.com.apisimplepicpay.domain.dtos.recors.TransactionRecord;
 import br.com.apisimplepicpay.domain.exceptions.OperationUnauthorizedException;
 import br.com.apisimplepicpay.domain.exceptions.UnauthorizedException;
 import br.com.apisimplepicpay.domain.exceptions.UserNotFoundException;
@@ -25,10 +26,10 @@ public class TrasactionServiceImp implements TransactionServicePort {
 
     @Transactional
     @Override
-    public void createTransaction(TransactionDTO transaction) throws UserNotFoundException, OperationUnauthorizedException {
-        User sender = service.findUserById(transaction.senderId());
+    public void createTransaction(TransactionRecord transaction) throws UserNotFoundException, OperationUnauthorizedException {
+        User sender = new User(service.findUserById(transaction.senderId()));
 
-        User receiver = service.findUserById(transaction.receiverId());
+        User receiver = new User(service.findUserById(transaction.receiverId()));
 
         service.checkTransaction(sender, transaction.value());
 
@@ -37,8 +38,8 @@ public class TrasactionServiceImp implements TransactionServicePort {
         sender.setBalance(sender.getBalance().subtract(transaction.value()));
         receiver.setBalance(receiver.getBalance().add(transaction.value()));
 
-        service.saveUser(sender.toUserDTO());
-        service.saveUser(receiver.toUserDTO());
+        service.saveUser(sender.toUserRecord());
+        service.saveUser(receiver.toUserRecord());
     }
 
     private boolean authorizeTransaction() throws UnauthorizedException {

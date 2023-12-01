@@ -28,8 +28,8 @@ public class UserRepository implements UserRepositoryPort {
     }
 
     @Override
-    public void saveUser(User user) {
-        repository.save(new UserEntity(user)).toUser();
+    public User saveUser(User user) {
+        return repository.save(new UserEntity(user)).toUser();
     }
 
     private User toUser(Optional<UserEntity> entity) throws UserNotFoundException {
