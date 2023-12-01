@@ -1,6 +1,7 @@
 package br.com.apisimplepicpay.domain;
 
 import br.com.apisimplepicpay.domain.dtos.UserDTO;
+import br.com.apisimplepicpay.domain.dtos.recors.UserRecord;
 import br.com.apisimplepicpay.domain.enums.UserTypeEnum;
 import br.com.apisimplepicpay.infra.adapters.entities.UserEntity;
 
@@ -34,19 +35,33 @@ public class User {
         userType = entity.getUserType();
     }
 
-    public User(UserDTO dto) {
-        id = dto.getId();
-        firstName = dto.getFirstName();
-        lastName = dto.getLastName();
-        document = dto.getDocument();
-        email = dto.getEmail();
-        password = dto.getPassword();
-        balance = dto.getBalance();
-        userType = dto.getUserType();
+    public User(UserDTO user) {
+        id = user.getId();
+        firstName = user.getFirstName();
+        lastName = user.getLastName();
+        document = user.getDocument();
+        email = user.getEmail();
+        password = user.getPassword();
+        balance = user.getBalance();
+        userType = user.getUserType();
+    }
+
+    public User(UserRecord user) {
+        firstName = user.firstName();
+        lastName = user.lastName();
+        document = user.document();
+        email = user.email();
+        password = user.password();
+        balance = user.balance();
+        userType = user.type();
     }
 
     public UserDTO toUserDTO() {
         return new UserDTO(this);
+    }
+
+    public UserRecord toUserRecord() {
+        return new UserRecord(firstName, lastName, document, email, password, balance, userType);
     }
 
     public Long getId() {

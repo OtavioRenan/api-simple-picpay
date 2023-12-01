@@ -1,6 +1,7 @@
 package br.com.apisimplepicpay.domain.dtos;
 
 import br.com.apisimplepicpay.domain.User;
+import br.com.apisimplepicpay.domain.dtos.recors.UserRecord;
 import br.com.apisimplepicpay.domain.enums.UserTypeEnum;
 
 import java.math.BigDecimal;
