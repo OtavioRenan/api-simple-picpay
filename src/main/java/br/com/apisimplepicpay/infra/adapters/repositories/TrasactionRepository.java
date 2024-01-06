@@ -28,8 +28,8 @@ public class TrasactionRepository implements TransactionRepositoryPort {
     }
 
     @Override
-    public void createTransaction(Transaction transaction) {
-        repository.save(new TransactionEntity(transaction));
+    public Transaction createTransaction(Transaction transaction) {
+        return repository.save(new TransactionEntity(transaction)).toTransaction();
     }
 
     @Override

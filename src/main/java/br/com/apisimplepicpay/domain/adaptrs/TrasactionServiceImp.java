@@ -2,11 +2,12 @@ package br.com.apisimplepicpay.domain.adaptrs;
 
 import br.com.apisimplepicpay.domain.Transaction;
 import br.com.apisimplepicpay.domain.User;
-import br.com.apisimplepicpay.domain.dtos.UserDTO;
-import br.com.apisimplepicpay.domain.dtos.recors.TransactionRecord;
+import br.com.apisimplepicpay.domain.dtos.TransactionDTO;
+import br.com.apisimplepicpay.domain.exceptions.NotificationUnavailableException;
 import br.com.apisimplepicpay.domain.exceptions.OperationUnauthorizedException;
 import br.com.apisimplepicpay.domain.exceptions.UnauthorizedException;
 import br.com.apisimplepicpay.domain.exceptions.UserNotFoundException;
+import br.com.apisimplepicpay.domain.ports.interfaces.NotificationServicePort;
 import br.com.apisimplepicpay.domain.ports.interfaces.TransactionServicePort;
 import br.com.apisimplepicpay.domain.ports.interfaces.UserServicePort;
 import br.com.apisimplepicpay.domain.ports.repositories.TransactionRepositoryPort;
@@ -19,32 +20,42 @@ public class TrasactionServiceImp implements TransactionServicePort {
 
     private final UserServicePort service;
 
-    public TrasactionServiceImp(TransactionRepositoryPort repository, UserServicePort service) {
+    private final NotificationServicePort notificationService;
+
+    public TrasactionServiceImp(TransactionRepositoryPort repository, UserServicePort service, NotificationServicePort notificationService) {
         this.repository = repository;
         this.service = service;
+        this.notificationService = notificationService;
     }
 
     @Transactional
     @Override
-    public void createTransaction(TransactionRecord transaction) throws UserNotFoundException, OperationUnauthorizedException {
-        User sender = new User(service.findUserById(transaction.senderId()));
+    public TransactionDTO createTransaction(TransactionDTO dto) throws UserNotFoundException, OperationUnauthorizedException, NotificationUnavailableException, UnauthorizedException {
+        authorizeTransaction();
 
-        User receiver = new User(service.findUserById(transaction.receiverId()));
+        User sender = new User(service.findUserById(dto.getSenderId()));
 
-        service.checkTransaction(sender, transaction.value());
+        User receiver = new User(service.findUserById(dto.getReceiverId()));
 
-        repository.createTransaction(new Transaction(transaction.value(), sender, receiver, LocalDateTime.now()));
+        service.checkTransaction(sender, dto.getValue());
 
-        sender.setBalance(sender.getBalance().subtract(transaction.value()));
-        receiver.setBalance(receiver.getBalance().add(transaction.value()));
+        Transaction transaction = repository.createTransaction(new Transaction(dto.getValue(), sender, receiver, LocalDateTime.now()));
 
-        service.saveUser(sender.toUserRecord());
-        service.saveUser(receiver.toUserRecord());
+        sender.setBalance(sender.getBalance().subtract(dto.getValue()));
+        receiver.setBalance(receiver.getBalance().add(dto.getValue()));
+
+        service.saveUser(sender.toUserDTO(), sender.getId());
+        service.saveUser(receiver.toUserDTO(), receiver.getId());
+
+        notificationService.sendNotification(sender, "Transação realizada com sucesso.");
+        notificationService.sendNotification(receiver, "Transação recebida com secesso.");
+
+        return transaction.toTransactionDTO();
     }
 
-    private boolean authorizeTransaction() throws UnauthorizedException {
-        if (repository.authorizeTransaction()) return true;
-
-        throw new UnauthorizedException();
+    private void authorizeTransaction() throws UnauthorizedException {
+        if (!repository.authorizeTransaction()) {
+            throw new UnauthorizedException();
+        }
     }
 }
