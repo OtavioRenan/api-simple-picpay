@@ -7,7 +7,7 @@ public enum UserTypeEnum {
     COMMON("common"),
     MERCHANT("merchant");
 
-    private String type;
+    private final String type;
 
     UserTypeEnum(String type) {
         this.type = type;

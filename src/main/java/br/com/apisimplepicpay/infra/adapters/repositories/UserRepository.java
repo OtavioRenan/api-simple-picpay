@@ -7,7 +7,7 @@ import br.com.apisimplepicpay.infra.adapters.entities.UserEntity;
 import br.com.apisimplepicpay.infra.adapters.jpas.UserEntityJpaRepository;
 import org.springframework.stereotype.Component;
 
-import java.util.Optional;
+import java.util.List;
 
 @Component
 public class UserRepository implements UserRepositoryPort {
@@ -18,21 +18,22 @@ public class UserRepository implements UserRepositoryPort {
     }
 
     @Override
+    public List<User> getUsers() {
+        return repository.findAll().stream().map(UserEntity::toUser).toList();
+    }
+
+    @Override
     public User findUserById(Long id) throws UserNotFoundException {
-        return toUser(repository.findById(id));
+        return repository.findById(id).orElseThrow(UserNotFoundException::new).toUser();
     }
 
     @Override
     public User findUserByDocument(String document) throws UserNotFoundException {
-        return toUser(repository.findUserByDocument(document));
+        return repository.findUserByDocument(document).orElseThrow(UserNotFoundException::new).toUser();
     }
 
     @Override
     public User saveUser(User user) {
         return repository.save(new UserEntity(user)).toUser();
-    }
-
-    private User toUser(Optional<UserEntity> entity) throws UserNotFoundException {
-        return entity.orElseThrow(UserNotFoundException::new).toUser();
     }
 }
