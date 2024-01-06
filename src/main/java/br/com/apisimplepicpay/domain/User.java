@@ -41,7 +41,6 @@ public class User {
         lastName = user.getLastName();
         document = user.getDocument();
         email = user.getEmail();
-        password = user.getPassword();
         balance = user.getBalance();
         userType = user.getUserType();
     }
@@ -58,10 +57,6 @@ public class User {
 
     public UserDTO toUserDTO() {
         return new UserDTO(this);
-    }
-
-    public UserRecord toUserRecord() {
-        return new UserRecord(firstName, lastName, document, email, password, balance, userType);
     }
 
     public Long getId() {

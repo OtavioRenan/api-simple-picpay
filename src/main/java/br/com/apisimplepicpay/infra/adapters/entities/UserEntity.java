@@ -15,28 +15,28 @@ public class UserEntity {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @NotBlank
+    @NotBlank(message = "O campo 'primeiro nome' não pode está em branco.' ")
     @Column(name = "first_name")
     private String firstName;
 
-    @NotBlank
+    @NotBlank(message = "O campo 'ultimo nome' não pode está em branco.' ")
     @Column(name = "last_name")
     private String lastName;
 
-    @NotBlank
+    @NotBlank(message = "O campo 'documento' não pode está em branco.' ")
     @Column(unique = true)
     private String document;
 
-    @NotBlank
+    @NotBlank(message = "O campo 'email' não pode está em branco.' ")
     private String email;
 
-    @NotBlank
+    @NotBlank(message = "O campo 'senha' não pode está em branco.' ")
     private String password;
 
-    @NotNull
+    @NotNull(message = "O campo 'saldo' não pode está em branco.' ")
     private BigDecimal balance;
 
-    @NotNull
+    @NotNull(message = "O campo 'tipo de usuário' não pode está em branco.' ")
     @Column(name = "user_types")
     @Enumerated(EnumType.STRING)
     private UserTypeEnum userType;

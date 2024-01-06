@@ -1,7 +1,6 @@
 package br.com.apisimplepicpay.domain.dtos;
 
 import br.com.apisimplepicpay.domain.User;
-import br.com.apisimplepicpay.domain.dtos.recors.UserRecord;
 import br.com.apisimplepicpay.domain.enums.UserTypeEnum;
 
 import java.math.BigDecimal;
@@ -17,8 +16,6 @@ public class UserDTO {
 
     private String email;
 
-    private String password;
-
     private BigDecimal balance;
 
     private UserTypeEnum userType;
@@ -32,7 +29,6 @@ public class UserDTO {
         lastName = user.getLastName();
         document = user.getDocument();
         email = user.getEmail();
-        password = user.getPassword();
         balance = user.getBalance();
         userType = user.getUserType();
     }
@@ -75,14 +71,6 @@ public class UserDTO {
 
     public void setEmail(String email) {
         this.email = email;
-    }
-
-    public String getPassword() {
-        return password;
-    }
-
-    public void setPassword(String password) {
-        this.password = password;
     }
 
     public BigDecimal getBalance() {
