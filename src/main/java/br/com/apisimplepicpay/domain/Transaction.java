@@ -1,5 +1,6 @@
 package br.com.apisimplepicpay.domain;
 
+import br.com.apisimplepicpay.domain.dtos.TransactionDTO;
 import br.com.apisimplepicpay.infra.adapters.entities.TransactionEntity;
 
 import java.math.BigDecimal;
@@ -29,6 +30,10 @@ public class Transaction {
         this.sender = sender;
         this.receiver = receiver;
         this.timestamp = timestamp;
+    }
+
+    public TransactionDTO toTransactionDTO() {
+        return new TransactionDTO(amount, sender.getId(), receiver.getId());
     }
 
     public Long getId() {

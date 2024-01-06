@@ -14,20 +14,20 @@ public class TransactionEntity {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @NotNull
+    @NotNull(message = "O campo 'quantia' não pode ser nulo.")
     private BigDecimal amount;
 
-    @NotNull
+    @NotNull(message = "O campo 'debitante' não pode ser nulo.")
     @ManyToOne
     @JoinColumn(name = "sender_id")
     private UserEntity sender;
 
-    @NotNull
+    @NotNull(message = "O campo 'debitado' não pode ser nulo.")
     @ManyToOne
     @JoinColumn(name = "receiver_id")
     private UserEntity receiver;
 
-    @NotNull
+    @NotNull(message = "O campo 'data e hora' não pode ser nulo.")
     private LocalDateTime timestamp;
 
     public TransactionEntity() {
