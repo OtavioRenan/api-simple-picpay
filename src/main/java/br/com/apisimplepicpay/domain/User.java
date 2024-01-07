@@ -24,6 +24,17 @@ public class User {
 
     private UserTypeEnum userType;
 
+    public User(Long id, String firstName, String lastName, String document, String email, String password, BigDecimal balance, UserTypeEnum userType) {
+        this.id = id;
+        this.firstName = firstName;
+        this.lastName = lastName;
+        this.document = document;
+        this.email = email;
+        this.password = password;
+        this.balance = balance;
+        this.userType = userType;
+    }
+
     public User(UserEntity entity) {
         id = entity.getId();
         firstName = entity.getFirstName();
