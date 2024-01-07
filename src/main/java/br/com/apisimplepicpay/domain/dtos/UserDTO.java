@@ -4,6 +4,7 @@ import br.com.apisimplepicpay.domain.User;
 import br.com.apisimplepicpay.domain.enums.UserTypeEnum;
 
 import java.math.BigDecimal;
+import java.util.Objects;
 
 public class UserDTO {
     private Long id;
@@ -87,5 +88,18 @@ public class UserDTO {
 
     public void setUserType(UserTypeEnum userType) {
         this.userType = userType;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        UserDTO userDTO = (UserDTO) o;
+        return Objects.equals(id, userDTO.id) && Objects.equals(firstName, userDTO.firstName) && Objects.equals(lastName, userDTO.lastName) && Objects.equals(document, userDTO.document) && Objects.equals(email, userDTO.email) && Objects.equals(balance, userDTO.balance) && userType == userDTO.userType;
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(id, firstName, lastName, document, email, balance, userType);
     }
 }
