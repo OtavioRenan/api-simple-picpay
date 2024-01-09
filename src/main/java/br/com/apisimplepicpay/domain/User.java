@@ -24,8 +24,7 @@ public class User {
 
     private UserTypeEnum userType;
 
-    public User(Long id, String firstName, String lastName, String document, String email, String password, BigDecimal balance, UserTypeEnum userType) {
-        this.id = id;
+    public User(String firstName, String lastName, String document, String email, String password, BigDecimal balance, UserTypeEnum userType) {
         this.firstName = firstName;
         this.lastName = lastName;
         this.document = document;
@@ -40,8 +39,8 @@ public class User {
         firstName = entity.getFirstName();
         lastName = entity.getLastName();
         document = entity.getDocument();
-        email = entity.getEmail();
-        password = entity.getPassword();
+//        email = entity.getEmail();
+//        password = entity.getPassword();
         balance = entity.getBalance();
         userType = entity.getUserType();
     }
