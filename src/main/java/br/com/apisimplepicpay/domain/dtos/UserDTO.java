@@ -95,7 +95,7 @@ public class UserDTO {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         UserDTO userDTO = (UserDTO) o;
-        return Objects.equals(id, userDTO.id) && Objects.equals(firstName, userDTO.firstName) && Objects.equals(lastName, userDTO.lastName) && Objects.equals(document, userDTO.document) && Objects.equals(email, userDTO.email) && Objects.equals(balance, userDTO.balance) && userType == userDTO.userType;
+        return Objects.equals(id, userDTO.id) && Objects.equals(firstName, userDTO.firstName) && Objects.equals(lastName, userDTO.lastName) && Objects.equals(document, userDTO.document) && Objects.equals(email, userDTO.email) && (balance.compareTo(userDTO.balance) == 0) && userType == userDTO.userType;
     }
 
     @Override

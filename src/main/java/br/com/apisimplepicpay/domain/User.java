@@ -39,8 +39,8 @@ public class User {
         firstName = entity.getFirstName();
         lastName = entity.getLastName();
         document = entity.getDocument();
-//        email = entity.getEmail();
-//        password = entity.getPassword();
+        email = entity.getEmail();
+        password = entity.getPassword();
         balance = entity.getBalance();
         userType = entity.getUserType();
     }
