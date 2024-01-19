@@ -1,4 +1,4 @@
-package br.com.apisimplepicpay.services;
+package br.com.apisimplepicpay.mock;
 
 import br.com.apisimplepicpay.domain.User;
 import br.com.apisimplepicpay.domain.adaptrs.UserServiceImp;
