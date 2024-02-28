@@ -6,7 +6,7 @@
 # separate terms of service, privacy policy, and support
 # documentation.
 
-name: Api Câmara Veradores CI/CD
+name: API PicPay CI/CD
 
 on:
   push:
